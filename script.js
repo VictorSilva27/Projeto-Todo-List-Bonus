@@ -6,6 +6,9 @@ const createLiWithText = () => {
   const li = document.createElement('li');
   li.className = 'tarefas';
   li.innerHTML = tasksTxt.value;
+  li.addEventListener('click', () => {
+    li.style.backgroundColor = 'gray';
+  });
   ol.appendChild(li);
   tasksTxt.value = '';
 };
