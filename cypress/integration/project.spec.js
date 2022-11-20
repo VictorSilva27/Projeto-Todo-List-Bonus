@@ -409,7 +409,7 @@ describe('12 - Adicione um botão com id="salvar-tarefas" que salve o conteúdo 
   });
 });
 
-describe.only('13 - Adicione dois botões, um com id="mover-cima" e outro com id="mover-baixo", que permitam mover o item selecionado para cima ou para baixo na lista de tarefas', () => {
+describe('13 - Adicione dois botões, um com id="mover-cima" e outro com id="mover-baixo", que permitam mover o item selecionado para cima ou para baixo na lista de tarefas', () => {
   beforeEach(() => {
     cy.viewport(1366, 768);
     cy.visit('./index.html');
