@@ -18,34 +18,42 @@ const clearOl = () => {
 
 clearAll.addEventListener('click', clearOl);
 
+const selectLi = ({ target }) => {
+  const liSelect = target;
+  const allLi = document.querySelectorAll('li');
+  const color = 'gray';
+  allLi.forEach((item) => {
+    const li = item;
+    if (li.style.backgroundColor !== color) {
+      liSelect.style.backgroundColor = color;
+    } else {
+      li.style.backgroundColor = 'white';
+      liSelect.style.backgroundColor = color;
+    }
+  });
+};
+
+const doneLi = ({ target }) => {
+  const li = target;
+  if (li.className === 'completed') {
+    li.className = '';
+    li.style.textDecoration = 'none';
+  } else {
+    clearDone.disabled = false;
+    li.className = 'completed';
+    li.style.textDecoration = 'line-through solid black';
+  }
+};
+
 const createLiWithText = () => {
   if (tasksTxt.value.length <= 0) {
     return alert('Error, Tarefa vázia');
   }
   const li = document.createElement('li');
   li.innerHTML = tasksTxt.value;
-  li.addEventListener('click', (event) => {
-    const allLi = document.querySelectorAll('li');
-    const color = 'gray';
-    allLi.forEach((item) => {
-      if (item.style.backgroundColor !== color) {
-        event.target.style.backgroundColor = color;
-      } else {
-        item.style.backgroundColor = 'white';
-        event.target.style.backgroundColor = color;
-      }
-    });
-  });
-  li.addEventListener('dblclick', () => {
-    if (li.className === 'completed') {
-      li.className = '';
-      li.style.textDecoration = 'none';
-    } else {
-      clearDone.disabled = false;
-      li.className = 'completed';
-      li.style.textDecoration = 'line-through solid black';
-    }
-  });
+  li.addEventListener('click', selectLi);
+
+  li.addEventListener('dblclick', doneLi);
   ol.appendChild(li);
   tasksTxt.value = '';
 };
