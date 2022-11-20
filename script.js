@@ -6,6 +6,9 @@ const saveAll = document.querySelector('#salvar-tarefas');
 const clearDone = document.querySelector('#remover-finalizados');
 const clearSelect = document.querySelector('#remover-selecionado');
 
+const moveUp = document.querySelector('#mover-cima');
+const moveDown = document.querySelector('#mover-baixo');
+
 const salvarLista = () => localStorage.setItem('list', ol.innerHTML);
 
 const getList = () => localStorage.getItem('list');
@@ -54,6 +57,7 @@ const createLiWithText = () => {
   li.addEventListener('click', selectLi);
 
   li.addEventListener('dblclick', doneLi);
+  console.log(li);
   ol.appendChild(li);
   tasksTxt.value = '';
 };
@@ -82,6 +86,31 @@ clearSelect.addEventListener('click', () => {
   });
 });
 
+const changePosition = (arr, from, to) => {
+  arr.splice(to, 0, arr.splice(from, 1)[0]);
+  arr.forEach((li) => {
+    ol.appendChild(li);
+  });
+  return arr;
+};
+
+const moveLi = (operação) => {
+  const arrayLi = document.querySelectorAll('li');
+  const arrayValue = Object.values(arrayLi);
+  const itens = arrayValue.findIndex((item) => item.style.backgroundColor === 'gray');
+  if (itens === -1) {
+    return alert('Error, você não selecionou nenhuma tarefa');
+  }
+  const to = operação === '+' ? itens - 1 : itens + 1;
+  changePosition(arrayValue, itens, to);
+};
+
+moveUp.addEventListener('click', () => moveLi('+'));
+
+moveDown.addEventListener('click', () => moveLi('-'));
+
 window.onload = () => {
-  ol.innerHTML = getList();
+  const hehe = getList();
+  console.log(hehe);
+  ol.innerHTML = hehe;
 };
